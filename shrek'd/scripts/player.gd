@@ -8,8 +8,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var can_shoot = false
 var dead = false
 
-# screen shake
-
 @onready var left_arm = $CanvasLayer/GunBase/LeftArm
 @onready var right_arm = $CanvasLayer/GunBase/RightArm
 @onready var raycast = $RayCast3D

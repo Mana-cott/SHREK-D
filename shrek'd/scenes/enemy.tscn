@@ -1,0 +1,127 @@
+[gd_scene load_steps=15 format=3 uid="uid://cmpihv3ge6mrr"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_k3uep"]
+[ext_resource type="Texture2D" uid="uid://ih8meqluul58" path="res://assets/sprites/knights/knight_cgd.png" id="2_nwtcw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8q02f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smeir"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(11520, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skb06"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(13440, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmmt7"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(15360, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77d6c"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(11520, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57vex"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(9600, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fknn"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6kht"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bl3q2"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(7680, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsmgw"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2eco"]
+atlas = ExtResource("2_nwtcw")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pecd6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smeir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skb06")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmmt7")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77d6c")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57vex")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fknn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6kht")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bl3q2")
+}],
+"loop": true,
+"name": &"shock",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsmgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2eco")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 2.0
+}]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_k3uep")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_8q02f")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.255128, 0, 0, 0, 0.255128, 0, 0, 0, 0.255128, 1.25095, 0.213523, 0)
+sprite_frames = SubResource("SpriteFrames_pecd6")
+animation = &"attack"
+
+[connection signal="animation_finished" from="AnimatedSprite3D" to="." method="_on_animated_sprite_3d_animation_finished"]
