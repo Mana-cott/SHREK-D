@@ -3,12 +3,18 @@ extends CharacterBody3D
 const SPEED = 4
 const LOOK_SENS = 0.5
 const JUMP_FORCE = 4.5
+const MAX_HEALTH = 4
+const HURT_FACE_DURATION = 0.5
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var can_shoot = false
 var can_charge = false
 var dead = false
 var punch_right_next = true
+var health
+var roared_at = []
+var mouse_x_velocity = 0.0
+var hurt_face_timer = 0.0
 
 # punch transform changes
 var left_arm_scale
@@ -20,10 +26,11 @@ var right_tween: Tween
 
 @onready var left_arm = $CanvasLayer/GunBase/LeftArm
 @onready var right_arm = $CanvasLayer/GunBase/RightArm
+@onready var shrek_faces = $CanvasLayer/PlayerData/HBoxContainer/ShrekFace
 @onready var raycast = $RayCast3D
 
 func _ready():
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	left_arm.play("idle")
 	right_arm.play("idle")
 	left_arm_scale = left_arm.scale
@@ -31,6 +38,7 @@ func _ready():
 	left_arm_offset = left_arm.offset
 	right_arm_offset = right_arm.offset
 	
+	health = MAX_HEALTH
 	can_shoot = true
 	
 func _input(event):
@@ -38,6 +46,7 @@ func _input(event):
 		return
 	if event is InputEventMouseMotion:
 		rotation_degrees.y -= LOOK_SENS * event.relative.x
+		mouse_x_velocity = event.relative.x
 		
 func _process(delta):
 	if Input.is_action_pressed("exit"):
@@ -68,6 +77,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animations()
+	update_face(delta)
 		
 func shoot():
 	if not can_shoot or dead:
@@ -97,10 +107,64 @@ func update_animations():
 		left_arm.play("idle")
 		right_arm.play("idle")
 
+
+func update_face(delta):
+	if dead:
+		return
+
+	if hurt_face_timer > 0:
+		hurt_face_timer -= delta
+		shrek_faces.play("hurt")
+		mouse_x_velocity = 0.0
+		return
+
+	# spot new enemy
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if collider not in roared_at and collider.has_method("kill"):
+			roared_at.append(collider)
+			shrek_faces.play("roar")
+			mouse_x_velocity = 0.0
+			return
+
+	# keep showing roar frame until animation finishes
+	if shrek_faces.animation == "roar" and shrek_faces.is_playing():
+		mouse_x_velocity = 0.0
+		return
+
+	if abs(mouse_x_velocity) > 40.0:
+		if mouse_x_velocity > 0:
+			shrek_faces.play("look_left")
+		else:
+			shrek_faces.play("look_right")
+		mouse_x_velocity = 0.0
+		return
+		
+	if shrek_faces.animation in ["look_left", "look_right"] and shrek_faces.is_playing():
+		mouse_x_velocity = 0.0
+		return
+
+	mouse_x_velocity = 0.0
+
+	match health:
+		4: shrek_faces.play("health_3")
+		3: shrek_faces.play("health_2")
+		2: shrek_faces.play("health_1")
+		1, 0: shrek_faces.play("health_0")
+
+func take_damage():
+	health -= 1
+	hurt_face_timer = HURT_FACE_DURATION
+	if health <= 0:
+		kill()
+
 func kill():
 	dead = true
 	$CanvasLayer/DeathScreen.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func on_enemy_killed():
+	shrek_faces.play("happy")
 
 func _tween_arm_punch(arm: AnimatedSprite2D, target_offset: Vector2, target_scale : Vector2):
 	if arm == left_arm and left_tween:
