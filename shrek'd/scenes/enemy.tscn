@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cmpihv3ge6mrr"]
+[gd_scene load_steps=16 format=3 uid="uid://cmpihv3ge6mrr"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_k3uep"]
 [ext_resource type="Texture2D" uid="uid://ih8meqluul58" path="res://assets/sprites/knights/knight_cgd.png" id="2_nwtcw"]
@@ -113,15 +113,25 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bcnsm"]
+radius = 0.273731
+height = 2.043
+
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_k3uep")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="AliveCollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8q02f")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.255128, 0, 0, 0, 0.255128, 0, 0, 0, 0.255128, 1.25095, 0.213523, 0)
 sprite_frames = SubResource("SpriteFrames_pecd6")
 animation = &"attack"
+frame = 1
+frame_progress = 1.0
+
+[node name="DeadCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.102985, -0.498924, 0)
+shape = SubResource("CapsuleShape3D_bcnsm")
 
 [connection signal="animation_finished" from="AnimatedSprite3D" to="." method="_on_animated_sprite_3d_animation_finished"]

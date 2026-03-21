@@ -11,7 +11,12 @@ var hurt = false
 var dead = false
 
 @onready var player : CharacterBody3D = get_tree().get_first_node_in_group("player")
-@onready var sprite: AnimatedSprite3D = $AnimatedSprite3D
+@onready var sprite : AnimatedSprite3D = $AnimatedSprite3D
+@onready var alive_collision_shape : CollisionShape3D = $AliveCollisionShape
+@onready var dead_collision_shape : CollisionShape3D = $DeadCollisionShape
+
+func _ready():
+	dead_collision_shape.disabled = true
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -73,8 +78,9 @@ func attempt_to_kill_player():
 
 func kill():
 	dead = true
-	$CollisionShape3D.disabled = true
-
+	dead_collision_shape.disabled = false
+	alive_collision_shape.disabled = true
+	
 
 func _on_animated_sprite_3d_animation_finished():
 	if sprite.animation == "attack":

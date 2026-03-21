@@ -203,7 +203,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LeftArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
-position = Vector2(-171, 128)
+position = Vector2(-171, 135)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_fjl0f")
 animation = &"punch"
@@ -211,7 +211,7 @@ frame = 6
 frame_progress = 1.0
 
 [node name="RightArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
-position = Vector2(212, 128)
+position = Vector2(212, 135)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_0in6b")
 animation = &"punch"
