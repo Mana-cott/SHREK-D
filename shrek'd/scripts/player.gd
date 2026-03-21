@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const SPEED = 6
+const SPEED = 4
 const LOOK_SENS = 0.5
 const JUMP_FORCE = 4.5
 
@@ -8,14 +8,16 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var can_shoot = false
 var dead = false
 
+var punch_right_next = true
 @onready var left_arm = $CanvasLayer/GunBase/LeftArm
 @onready var right_arm = $CanvasLayer/GunBase/RightArm
 @onready var raycast = $RayCast3D
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	left_arm.play()
-	right_arm.play()
+	left_arm.play("idle")
+	right_arm.play("idle")
+	can_shoot = true
 	
 func _input(event):
 	if dead:
@@ -53,10 +55,15 @@ func _physics_process(delta):
 	move_and_slide()
 		
 func shoot():
-	if !can_shoot:
+	if not can_shoot or dead:
 		return
 	can_shoot = false
-	#right_arm.play("shoot")
+	
+	if punch_right_next:
+		right_arm.play("punch")
+	else:
+		left_arm.play("punch")
+	
 	if raycast.is_colliding() and raycast.get_collider().has_method("kill"):
 		raycast.get_collider().kill()
 
@@ -64,3 +71,10 @@ func kill():
 	dead = true
 	$CanvasLayer/DeathScreen.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _on_punch_finished():
+	punch_right_next = !punch_right_next # toggle arm
+	can_shoot = true
+	left_arm.play("idle")
+	right_arm.play("idle")

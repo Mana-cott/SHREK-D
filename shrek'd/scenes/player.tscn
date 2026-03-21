@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://qt3oq6drn0xf"]
+[gd_scene load_steps=29 format=3 uid="uid://qt3oq6drn0xf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7tsrc"]
 [ext_resource type="Texture2D" uid="uid://botg4h4650cy1" path="res://assets/sprites/shrek/idle_hand_left.png" id="2_nnmvx"]
 [ext_resource type="Texture2D" uid="uid://daulyfovqe2vh" path="res://assets/sprites/shrek/idle_hand_right.png" id="3_jol57"]
+[ext_resource type="Texture2D" uid="uid://dtgt5dxttckws" path="res://assets/sprites/shrek/punch_left.png" id="3_knyil"]
+[ext_resource type="Texture2D" uid="uid://b4vk7dcpcsq86" path="res://assets/sprites/shrek/punch_right.png" id="5_lffao"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r6x86"]
 
@@ -17,6 +19,34 @@ region = Rect2(1920, 0, 1920, 1080)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kp2sr"]
 atlas = ExtResource("2_nnmvx")
 region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8swp3"]
+atlas = ExtResource("3_knyil")
+region = Rect2(11520, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54272"]
+atlas = ExtResource("3_knyil")
+region = Rect2(9600, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2w0cd"]
+atlas = ExtResource("3_knyil")
+region = Rect2(7680, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rhxx"]
+atlas = ExtResource("3_knyil")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efatc"]
+atlas = ExtResource("3_knyil")
+region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkusq"]
+atlas = ExtResource("3_knyil")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4dhs"]
+atlas = ExtResource("3_knyil")
+region = Rect2(0, 0, 1920, 1080)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fjl0f"]
 animations = [{
@@ -33,6 +63,32 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8swp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54272")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2w0cd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rhxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efatc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkusq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4dhs")
+}],
+"loop": false,
+"name": &"punch",
+"speed": 12.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u6jce"]
@@ -46,6 +102,34 @@ region = Rect2(1920, 0, 1920, 1080)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1y87w"]
 atlas = ExtResource("3_jol57")
 region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5gwo"]
+atlas = ExtResource("5_lffao")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twbhf"]
+atlas = ExtResource("5_lffao")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhfpp"]
+atlas = ExtResource("5_lffao")
+region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87o08"]
+atlas = ExtResource("5_lffao")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvl7u"]
+atlas = ExtResource("5_lffao")
+region = Rect2(7680, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7k2k"]
+atlas = ExtResource("5_lffao")
+region = Rect2(9600, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnnvc"]
+atlas = ExtResource("5_lffao")
+region = Rect2(11520, 0, 1920, 1080)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0in6b"]
 animations = [{
@@ -62,6 +146,32 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n5gwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twbhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhfpp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87o08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvl7u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7k2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnnvc")
+}],
+"loop": false,
+"name": &"punch",
+"speed": 12.0
 }]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
@@ -96,14 +206,17 @@ grow_vertical = 2
 position = Vector2(-171, 128)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_fjl0f")
-animation = &"idle"
-frame_progress = 0.62678
+animation = &"punch"
+frame = 6
+frame_progress = 1.0
 
 [node name="RightArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
 position = Vector2(212, 128)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_0in6b")
-animation = &"idle"
+animation = &"punch"
+frame = 6
+frame_progress = 1.0
 
 [node name="DeathScreen" type="Control" parent="CanvasLayer"]
 visible = false
@@ -126,3 +239,6 @@ offset_bottom = 23.0
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+
+[connection signal="animation_finished" from="CanvasLayer/GunBase/LeftArm" to="." method="_on_punch_finished"]
+[connection signal="animation_finished" from="CanvasLayer/GunBase/RightArm" to="." method="_on_punch_finished"]
