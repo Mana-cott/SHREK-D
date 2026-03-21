@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 @export var move_speed = 2.0
 @export var attack_range = 2.0
+@export var max_health = 3
+var health
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -17,13 +19,15 @@ var dead = false
 
 func _ready():
 	dead_collision_shape.disabled = true
-
+	health = max_health
+	
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
 	if dead or player == null:
-		if dead: 
+		if dead:
+			update_animations()
 			move_and_slide()
 			return
 
@@ -35,9 +39,11 @@ func _physics_process(delta):
 	update_animations()
 
 func handle_movement(_delta):
-	if attacking or hurt:
+	if attacking:
 		velocity.x = 0
 		velocity.z = 0
+	elif hurt:
+		pass
 	else:
 		var dir = (player.global_position - global_position).normalized()
 		velocity.x = dir.x * move_speed
@@ -76,8 +82,25 @@ func attempt_to_kill_player():
 		if player.has_method("kill"):
 			player.kill()
 
+func take_damage():
+	if dead:
+		return
+	health -= 1
+	hurt = true
+	if health <= 0:
+		kill()
+	
+func knockback(force: Vector3):
+	if dead:
+		return
+	velocity += force
+	attacking = false
+	take_damage()
+
 func kill():
 	dead = true
+	attacking = false
+	hurt = false
 	dead_collision_shape.disabled = false
 	alive_collision_shape.disabled = true
 	

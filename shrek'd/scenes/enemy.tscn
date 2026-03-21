@@ -78,7 +78,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_57vex")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -126,12 +126,10 @@ shape = SubResource("CapsuleShape3D_8q02f")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.255128, 0, 0, 0, 0.255128, 0, 0, 0, 0.255128, 1.25095, 0.213523, 0)
 sprite_frames = SubResource("SpriteFrames_pecd6")
-animation = &"attack"
-frame = 1
-frame_progress = 1.0
+animation = &"hurt"
 
 [node name="DeadCollisionShape" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.102985, -0.498924, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.103, -0.7, 0)
 shape = SubResource("CapsuleShape3D_bcnsm")
 
 [connection signal="animation_finished" from="AnimatedSprite3D" to="." method="_on_animated_sprite_3d_animation_finished"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://qt3oq6drn0xf"]
+[gd_scene load_steps=52 format=3 uid="uid://qt3oq6drn0xf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7tsrc"]
 [ext_resource type="Texture2D" uid="uid://c1hearftigf6w" path="res://assets/sprites/shrek/open_left.png" id="2_l6mkl"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dtgt5dxttckws" path="res://assets/sprites/shrek/punch_left.png" id="3_knyil"]
 [ext_resource type="Texture2D" uid="uid://b4vk7dcpcsq86" path="res://assets/sprites/shrek/punch_right.png" id="5_lffao"]
 [ext_resource type="Texture2D" uid="uid://b8by88xth6hgw" path="res://assets/sprites/shrek/open_right.png" id="5_mqkxc"]
+[ext_resource type="Texture2D" uid="uid://b6o071fwnrlj6" path="res://assets/sprites/shrek/shoulder.png" id="9_5vdud"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r6x86"]
 
@@ -369,6 +370,21 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_deulr"]
+atlas = ExtResource("9_5vdud")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xqaty"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deulr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_7tsrc")
 
@@ -402,7 +418,7 @@ offset_bottom = 40.0
 position = Vector2(-462, 68)
 scale = Vector2(0.153704, 0.153704)
 sprite_frames = SubResource("SpriteFrames_m0wdq")
-animation = &"look_right"
+animation = &"hurt"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerData/HBoxContainer"]
 layout_mode = 2
@@ -440,6 +456,11 @@ position = Vector2(212, -170)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_0in6b")
 animation = &"punch"
+
+[node name="Shoulder" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
+position = Vector2(107, -235)
+scale = Vector2(0.509001, 0.509001)
+sprite_frames = SubResource("SpriteFrames_xqaty")
 
 [node name="DeathScreen" type="Control" parent="CanvasLayer"]
 visible = false
