@@ -6,6 +6,7 @@ const JUMP_FORCE = 4.5
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var can_shoot = false
+var can_charge = false
 var dead = false
 var punch_right_next = true
 
@@ -22,7 +23,7 @@ var right_tween: Tween
 @onready var raycast = $RayCast3D
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	left_arm.play("idle")
 	right_arm.play("idle")
 	left_arm_scale = left_arm.scale

@@ -1,14 +1,80 @@
-[gd_scene load_steps=33 format=3 uid="uid://qt3oq6drn0xf"]
+[gd_scene load_steps=41 format=3 uid="uid://qt3oq6drn0xf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7tsrc"]
 [ext_resource type="Texture2D" uid="uid://c1hearftigf6w" path="res://assets/sprites/shrek/open_left.png" id="2_l6mkl"]
 [ext_resource type="Texture2D" uid="uid://botg4h4650cy1" path="res://assets/sprites/shrek/idle_hand_left.png" id="2_nnmvx"]
+[ext_resource type="Texture2D" uid="uid://uv8fx210vfas" path="res://assets/sprites/shrek/shrek_faces.png" id="2_xwkdd"]
 [ext_resource type="Texture2D" uid="uid://daulyfovqe2vh" path="res://assets/sprites/shrek/idle_hand_right.png" id="3_jol57"]
 [ext_resource type="Texture2D" uid="uid://dtgt5dxttckws" path="res://assets/sprites/shrek/punch_left.png" id="3_knyil"]
 [ext_resource type="Texture2D" uid="uid://b4vk7dcpcsq86" path="res://assets/sprites/shrek/punch_right.png" id="5_lffao"]
 [ext_resource type="Texture2D" uid="uid://b8by88xth6hgw" path="res://assets/sprites/shrek/open_right.png" id="5_mqkxc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r6x86"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pufk3"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro0jy"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(11520, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je85l"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cguej"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khcwo"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3m66i"]
+atlas = ExtResource("2_xwkdd")
+region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m0wdq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pufk3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro0jy")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je85l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cguej")
+}],
+"loop": false,
+"name": &"look_left",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khcwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3m66i")
+}],
+"loop": false,
+"name": &"look_right",
+"speed": 2.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ekt3"]
 atlas = ExtResource("2_l6mkl")
@@ -214,28 +280,60 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="PlayerData" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerData"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ShrekFace" type="AnimatedSprite2D" parent="CanvasLayer/PlayerData/HBoxContainer"]
+position = Vector2(-462, 68)
+scale = Vector2(0.153704, 0.153704)
+sprite_frames = SubResource("SpriteFrames_m0wdq")
+animation = &"hurt"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerData/HBoxContainer"]
+layout_mode = 2
+
+[node name="Health" type="TextureProgressBar" parent="CanvasLayer/PlayerData/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Stamina" type="ProgressBar" parent="CanvasLayer/PlayerData/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Gas" type="ProgressBar" parent="CanvasLayer/PlayerData/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="GunBase" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -20.0
+offset_top = -40.0
 offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 
 [node name="LeftArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
-position = Vector2(-171, 135)
+position = Vector2(-171, -170)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_fjl0f")
 animation = &"punch"
 
 [node name="RightArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
-position = Vector2(212, 135)
+position = Vector2(212, -170)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_0in6b")
 animation = &"punch"
