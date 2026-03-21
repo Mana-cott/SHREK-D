@@ -1,12 +1,18 @@
-[gd_scene load_steps=29 format=3 uid="uid://qt3oq6drn0xf"]
+[gd_scene load_steps=33 format=3 uid="uid://qt3oq6drn0xf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7tsrc"]
+[ext_resource type="Texture2D" uid="uid://c1hearftigf6w" path="res://assets/sprites/shrek/open_left.png" id="2_l6mkl"]
 [ext_resource type="Texture2D" uid="uid://botg4h4650cy1" path="res://assets/sprites/shrek/idle_hand_left.png" id="2_nnmvx"]
 [ext_resource type="Texture2D" uid="uid://daulyfovqe2vh" path="res://assets/sprites/shrek/idle_hand_right.png" id="3_jol57"]
 [ext_resource type="Texture2D" uid="uid://dtgt5dxttckws" path="res://assets/sprites/shrek/punch_left.png" id="3_knyil"]
 [ext_resource type="Texture2D" uid="uid://b4vk7dcpcsq86" path="res://assets/sprites/shrek/punch_right.png" id="5_lffao"]
+[ext_resource type="Texture2D" uid="uid://b8by88xth6hgw" path="res://assets/sprites/shrek/open_right.png" id="5_mqkxc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r6x86"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ekt3"]
+atlas = ExtResource("2_l6mkl")
+region = Rect2(0, 0, 1920, 1080)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rh2ii"]
 atlas = ExtResource("2_nnmvx")
@@ -51,6 +57,14 @@ region = Rect2(0, 0, 1920, 1080)
 [sub_resource type="SpriteFrames" id="SpriteFrames_fjl0f"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ekt3")
+}],
+"loop": true,
+"name": &"airborne",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_rh2ii")
 }, {
@@ -90,6 +104,10 @@ animations = [{
 "name": &"punch",
 "speed": 12.0
 }]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4cc5"]
+atlas = ExtResource("5_mqkxc")
+region = Rect2(0, 0, 1920, 1080)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u6jce"]
 atlas = ExtResource("3_jol57")
@@ -133,6 +151,14 @@ region = Rect2(11520, 0, 1920, 1080)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0in6b"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4cc5")
+}],
+"loop": true,
+"name": &"airborne",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u6jce")
@@ -207,16 +233,12 @@ position = Vector2(-171, 135)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_fjl0f")
 animation = &"punch"
-frame = 6
-frame_progress = 1.0
 
 [node name="RightArm" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
 position = Vector2(212, 135)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_0in6b")
 animation = &"punch"
-frame = 6
-frame_progress = 1.0
 
 [node name="DeathScreen" type="Control" parent="CanvasLayer"]
 visible = false

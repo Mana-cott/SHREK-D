@@ -64,8 +64,9 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		
+	
 	move_and_slide()
+	update_animations()
 		
 func shoot():
 	if not can_shoot or dead:
@@ -81,6 +82,19 @@ func shoot():
 	
 	if raycast.is_colliding() and raycast.get_collider().has_method("kill"):
 		raycast.get_collider().kill()
+
+func update_animations():
+	# order of priority
+	if dead:
+		return
+	if not can_shoot:
+		return
+	if not is_on_floor():
+		left_arm.play("airborne")
+		right_arm.play("airborne")
+	else:
+		left_arm.play("idle")
+		right_arm.play("idle")
 
 func kill():
 	dead = true
