@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var move_speed = 2.0
 @export var attack_range = 2.0
+@export var damage = 1.0
 @export var max_health = 3
 var health
 
@@ -79,9 +80,9 @@ func attempt_to_kill_player():
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	
 	if result.is_empty():
-		if player.has_method("kill"):
-			player.kill()
-
+		if player.has_method("take_damage"):
+			player.take_damage(damage)
+			
 func take_damage():
 	if dead:
 		return

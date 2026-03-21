@@ -3,7 +3,7 @@ extends CharacterBody3D
 const SPEED = 4
 const LOOK_SENS = 0.5
 const JUMP_FORCE = 4.5
-const MAX_HEALTH = 4
+const MAX_HEALTH = 6 # 3 onions x 2 hits each
 const HURT_FACE_DURATION = 0.5
 const BASH_SPEED = 28.0
 const BASH_MIN_STAMINA = 10.0
@@ -46,6 +46,11 @@ var right_tween: Tween
 @onready var shrek_faces = $CanvasLayer/PlayerData/HBoxContainer/ShrekFace
 @onready var stamina_bar = $CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Stamina
 @onready var raycast = $RayCast3D
+@onready var onions = [
+	$CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Health/OnionShell1,
+	$CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Health/OnionShell2,
+	$CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Health/OnionShell3
+]
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -65,6 +70,8 @@ func _ready():
 	shoulder.visible = false
 	left_arm.visible = true
 	right_arm.visible = true
+	
+	update_onions()
 
 func _input(event):
 	if dead:
@@ -245,15 +252,17 @@ func update_face(delta):
 		mouse_x_velocity = 0.0
 		return
 	mouse_x_velocity = 0.0
+	
 	match health:
-		4: shrek_faces.play("health_3")
-		3: shrek_faces.play("health_2")
+		6, 5: shrek_faces.play("health_3")
+		4, 3: shrek_faces.play("health_2")
 		2: shrek_faces.play("health_1")
 		1, 0: shrek_faces.play("health_0")
 
-func take_damage():
-	health -= 1
+func take_damage(damage):
+	health -= damage
 	hurt_face_timer = HURT_FACE_DURATION
+	update_onions()
 	if health <= 0:
 		kill()
 
@@ -261,6 +270,17 @@ func kill():
 	dead = true
 	$CanvasLayer/DeathScreen.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func update_onions():
+	for i in range(3):
+		var onion = onions[i]
+		var onion_health = health -(i * 2)
+		if onion_health >= 2:
+			onion.play("full")
+		elif onion_health == 1:
+			onion.play("half")
+		else:
+			onion.play("empty")
 
 func on_enemy_killed():
 	shrek_faces.play("happy")
