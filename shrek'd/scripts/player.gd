@@ -192,7 +192,7 @@ func _tick_bash(delta):
 				to_enemy.y = 0
 				body.knockback(bash_direction * 12.0 + to_enemy * 8.0 + Vector3(0, 5.0, 0))
 				if body.has_method("take_damage"):
-					body.take_damage(3)
+					body.take_damage(1)
 
 func spawn_afterimage():
 	var image = shoulder.duplicate() as AnimatedSprite2D

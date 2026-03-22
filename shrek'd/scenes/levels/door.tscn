@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://bwimsx1hd4ehx"]
+
+[ext_resource type="Texture2D" uid="uid://bnbh4hqc1jiod" path="res://assets/textures/doors_tiled2.png" id="1_17jfl"]
+[ext_resource type="Script" path="res://scripts/levels/door.gd" id="1_eq6tr"]
+[ext_resource type="Texture2D" uid="uid://c62mdcednwa1s" path="res://assets/textures/doors_tiled1.png" id="1_nhly6"]
+[ext_resource type="Texture2D" uid="uid://c2dyweabnwvh5" path="res://assets/textures/doors_tiled3.png" id="3_7iaco"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oem0h"]
+atlas = ExtResource("1_17jfl")
+region = Rect2(0, 0, 492, 587)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qetr0"]
+atlas = ExtResource("1_nhly6")
+region = Rect2(0, 0, 492, 587)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4112v"]
+atlas = ExtResource("3_7iaco")
+region = Rect2(0, 0, 492, 587)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_354ch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oem0h")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qetr0")
+}],
+"loop": true,
+"name": &"locked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4112v")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8as8o"]
+atlas = ExtResource("3_7iaco")
+region = Rect2(0, 0, 492, 587)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7g2b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8as8o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cxg53"]
+
+[node name="Door" type="Area3D"]
+script = ExtResource("1_eq6tr")
+
+[node name="door_front" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.185722, 0, 0, 0, 0.185722, 0, 0, 0, 0.185722, 0, 0, -0.381293)
+sprite_frames = SubResource("SpriteFrames_354ch")
+animation = &"closed"
+
+[node name="door_back" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.186, 0, 0, 0, 0.186, 0, 0, 0, 0.186, 0, 0, -0.492764)
+sprite_frames = SubResource("SpriteFrames_f7g2b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.59339, 0, 0, 0, 0.132243, 0.000532627, -8.3819e-08, -0.433184)
+shape = SubResource("CapsuleShape3D_cxg53")

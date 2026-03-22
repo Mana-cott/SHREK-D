@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm8nm0ihrp1sr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3w3eh"]
+size = Vector3(1, 0.001, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_k68tx"]
+
+[node name="Room" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1.99921, 0, 0, 0, 1.99921, 0, 0, 0, 1.99921, 0, 0, 0)
+shape = SubResource("BoxShape3D_3w3eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_k68tx")
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
+transform = Transform3D(1.99921, 0, 0, 0, -8.73881e-08, -1.99921, 0, 1.99921, -8.73881e-08, 0, -0.4, 0.998977)
+shape = SubResource("BoxShape3D_3w3eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallNorth"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.4, 0.998977)
+mesh = SubResource("PlaneMesh_k68tx")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
+transform = Transform3D(1.99921, 0, 0, 0, -8.73881e-08, -1.99921, 0, 1.99921, -8.73881e-08, 0, -0.4, -0.993517)
+shape = SubResource("BoxShape3D_3w3eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSouth"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.4, -0.993517)
+mesh = SubResource("PlaneMesh_k68tx")
+
+[node name="WallEast" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallEast"]
+transform = Transform3D(-8.73881e-08, 1.99921, -8.73881e-08, 0, -8.73881e-08, -1.99921, -1.99921, -8.73881e-08, 3.81986e-15, -0.994917, -0.405092, -0.00654697)
+shape = SubResource("BoxShape3D_3w3eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallEast"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -0.994917, -0.405092, -0.00654697)
+mesh = SubResource("PlaneMesh_k68tx")
+
+[node name="WallWest" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
+transform = Transform3D(-8.73881e-08, 1.99921, -8.73881e-08, 0, -8.73881e-08, -1.99921, -1.99921, -8.73881e-08, 3.81986e-15, 1.00068, -0.405092, -0.00654697)
+shape = SubResource("BoxShape3D_3w3eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallWest"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 1.00068, -0.405092, -0.00654697)
+mesh = SubResource("PlaneMesh_k68tx")
+
+[node name="DoorSlot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.989638, 0.0526187, 0.000946283)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkh17dxu73jpq"]
+
+[ext_resource type="Material" uid="uid://g4majf64egeo" path="res://assets/textures/materials/main.tres" id="1_xdr4r"]
+
+[node name="Hall" type="Node3D"]
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.472412, -0.5)
+size = Vector3(1, 0.0551758, 4)
+material = ExtResource("1_xdr4r")
