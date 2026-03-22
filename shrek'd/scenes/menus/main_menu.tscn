@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnhg0mdjdm7ic"]
+
+[ext_resource type="FontFile" uid="uid://5dggwemxrdbl" path="res://assets/fonts/SHREK___.TTF" id="1_dvv26"]
+[ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="1_s6ggn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3w4kv"]
+font = ExtResource("1_dvv26")
+font_size = 64
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s6ggn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -64.0
+offset_right = 48.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Shrek'd"
+label_settings = SubResource("LabelSettings_3w4kv")
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="ReadThis" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Read This!"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit Game"
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/ReadThis" to="." method="_on_read_this_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

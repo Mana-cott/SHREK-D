@@ -1,13 +1,15 @@
 extends CharacterBody3D
 
+const KNOCKBACK_FRICTION = 8.0
 @export var move_speed = 2.0
-@export var attack_range = 2.0
+@export var attack_range = 3.0
 @export var damage = 1.0
-@export var max_health = 3
-var health
+@export var max_health = 5
+@export var type = "reg" # or cgd
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
+var health
+var knockback_velocity = Vector3.ZERO
 # Enemy states
 var attacking = false
 var hurt = false
@@ -23,6 +25,9 @@ func _ready():
 	health = max_health
 	
 func _physics_process(delta):
+	# decay knockback
+	knockback_velocity = knockback_velocity.move_toward(Vector3.ZERO, KNOCKBACK_FRICTION * delta)
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
@@ -40,11 +45,15 @@ func _physics_process(delta):
 	update_animations()
 
 func handle_movement(_delta):
-	if attacking:
+	if dead:
+		return
+
+	if hurt:
+		velocity.x = knockback_velocity.x
+		velocity.z = knockback_velocity.z
+	elif attacking:
 		velocity.x = 0
 		velocity.z = 0
-	elif hurt:
-		pass
 	else:
 		var dir = (player.global_position - global_position).normalized()
 		velocity.x = dir.x * move_speed
@@ -59,16 +68,16 @@ func handle_movement(_delta):
 func update_animations():
 	# order of priority
 	if dead:
-		sprite.play("dead")
+		sprite.play("dead_" + type)
 		return
 	if hurt:
-		sprite.play("hurt")
+		sprite.play("hurt_" + type)
 	elif attacking:
-		sprite.play("attack")
+		sprite.play("attack_" + type)
 	elif velocity.length() > 0.1:
-		sprite.play("walk")
+		sprite.play("walk_" + type)
 	else:
-		sprite.play("idle")
+		sprite.play("idle_" + type)
 
 func attempt_to_kill_player():
 	var dist_to_player = global_position.distance_to(player.global_position)
@@ -83,10 +92,10 @@ func attempt_to_kill_player():
 		if player.has_method("take_damage"):
 			player.take_damage(damage)
 			
-func take_damage():
+func take_damage(damage = 1):
 	if dead:
 		return
-	health -= 1
+	health -= damage
 	hurt = true
 	if health <= 0:
 		kill()
@@ -94,9 +103,10 @@ func take_damage():
 func knockback(force: Vector3):
 	if dead:
 		return
-	velocity += force
+	knockback_velocity = force
+	velocity.y = force.y
 	attacking = false
-	take_damage()
+	hurt = true
 
 func kill():
 	dead = true
@@ -107,9 +117,9 @@ func kill():
 	
 
 func _on_animated_sprite_3d_animation_finished():
-	if sprite.animation == "attack":
+	if sprite.animation == "attack_" + type:
 		attempt_to_kill_player()
 		attacking = false
 		
-	if sprite.animation == "hurt":
+	if sprite.animation == "hurt_" + type:
 		hurt = false

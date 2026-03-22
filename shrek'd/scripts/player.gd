@@ -45,6 +45,7 @@ var right_tween: Tween
 @onready var shoulder = $CanvasLayer/GunBase/Shoulder
 @onready var shrek_faces = $CanvasLayer/PlayerData/HBoxContainer/ShrekFace
 @onready var stamina_bar = $CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Stamina
+@onready var gas_bar = $CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Gas
 @onready var raycast = $RayCast3D
 @onready var onions = [
 	$CanvasLayer/PlayerData/HBoxContainer/VBoxContainer/Health/OnionShell1,
@@ -54,6 +55,8 @@ var right_tween: Tween
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	stamina_bar.custom_minimum_size = Vector2(500, 20)
+	gas_bar.custom_minimum_size = Vector2(500, 20)
 	left_arm.play("idle")
 	right_arm.play("idle")
 	left_arm_scale = left_arm.scale
@@ -106,7 +109,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	if bashing:
-		tick_bash(delta)
+		_tick_bash(delta)
 		move_and_slide()
 		update_animations()
 		update_face(delta)
@@ -158,8 +161,11 @@ func end_bash():
 	shoulder.visible = false
 	left_arm.visible = true
 	right_arm.visible = true
+	for body in get_tree().get_nodes_in_group("enemies"):
+		if body.has_node("AliveCollisionShape") and not body.dead:
+			body.get_node("AliveCollisionShape").disabled = false
 
-func tick_bash(delta):
+func _tick_bash(delta):
 	# drain stamina
 	stamina -= BASH_DRAIN_RATE * delta
 	stamina = max(stamina, 0.0)
@@ -179,7 +185,14 @@ func tick_bash(delta):
 		if body not in hit_during_bash and body.has_method("knockback"):
 			if global_position.distance_to(body.global_position) < 2.5:
 				hit_during_bash.append(body)
-				body.knockback(bash_direction * 12.0)
+				if body.has_node("AliveCollisionShape"):
+					body.get_node("AliveCollisionShape").disabled = true
+				
+				var to_enemy = (body.global_position - global_position).normalized()
+				to_enemy.y = 0
+				body.knockback(bash_direction * 12.0 + to_enemy * 8.0 + Vector3(0, 5.0, 0))
+				if body.has_method("take_damage"):
+					body.take_damage(3)
 
 func spawn_afterimage():
 	var image = shoulder.duplicate() as AnimatedSprite2D
@@ -208,8 +221,12 @@ func shoot():
 	else:
 		left_arm.play("punch")
 		_tween_arm_punch(left_arm, Vector2(300, 0), left_arm_scale * 1.5)
-	if raycast.is_colliding() and raycast.get_collider().has_method("take_damage"):
-		raycast.get_collider().take_damage()
+	if raycast.is_colliding():
+		var col = raycast.get_collider()
+		if col.has_method("take_damage"):
+			col.take_damage()
+		if col.has_method("knockback"):
+			col.knockback(-transform.basis.z * 15.0)
 
 func update_animations():
 	if dead:
